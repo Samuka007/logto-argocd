@@ -27,7 +27,7 @@ spec:
           containerPort: 80
           protocol: TCP
         env:
-        - name: APP_ID
+        - name: LOGTO_APP_ID
           valueFrom:
             configMapKeyRef:
               name: demo-config
@@ -42,7 +42,7 @@ spec:
             configMapKeyRef:
               name: logto-config
               key: CORE_HOSTNAME
-        - name: ENDPOINT
+        - name: LOGTO_ENDPOINT
           value: "$(PROTOCOL)://$(CORE_HOSTNAME)"
 
         resources:
