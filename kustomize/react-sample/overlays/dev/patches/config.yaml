@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: demo-config
 data:
-  APP_ID: "react-sample-app"
+  APP_ID: "kul4wha45b8d1uj2u9vt5" # FIXME: Should be sealed
   HOSTNAME: "demo-kubernetes-au-dev.samuka007.com"
