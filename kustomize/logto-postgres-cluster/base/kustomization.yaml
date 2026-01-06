@@ -6,7 +6,6 @@ kind: Kustomization
 # backup-schedule 在 prod overlay 中启用
 resources:
 - cluster.yaml
-- pooler.yaml
 
 labels:
 - includeSelectors: true

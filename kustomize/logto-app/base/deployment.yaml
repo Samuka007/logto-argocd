@@ -35,31 +35,12 @@ spec:
           containerPort: 3002
           protocol: TCP
         env:
-        # Database connection - 通过 CNPG Pooler 连接数据库
-        - name: DB_HOST
-          value: logto-postgres-pooler
-        - name: DB_PORT
-          valueFrom:
-            secretKeyRef:
-              name: logto-postgres-app
-              key: port
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: logto-postgres-app
-              key: dbname
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: logto-postgres-app
-              key: password
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: logto-postgres-app
-              key: user
+        # Database connection - Directly use the CNPG generated URI
         - name: DB_URL
-          value: "postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
+          valueFrom:
+            secretKeyRef:
+              name: logto-postgres-app
+              key: uri
 
         # Configuration from ConfigMap
         - name: NODE_ENV
