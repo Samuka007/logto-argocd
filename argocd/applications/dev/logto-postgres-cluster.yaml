@@ -14,10 +14,12 @@ spec:
     repoURL: https://github.com/Samuka007/logto-argocd.git
     targetRevision: main
     path: kustomize/logto-postgres-cluster/overlays/dev
+    kustomize:
+      namespace: argocd-dev
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: dev
+    namespace: argocd-dev
 
   syncPolicy:
     automated:

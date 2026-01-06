@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: logto-app
+  name: react-sample
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # 数据库就绪后部署应用
+    argocd.argoproj.io/sync-wave: "10" # demo 应用最后部署
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: https://github.com/Samuka007/logto-argocd.git
     targetRevision: main
-    path: kustomize/logto-app/overlays/dev
+    path: kustomize/react-sample/overlays/dev
     kustomize:
       namespace: argocd-dev
 
