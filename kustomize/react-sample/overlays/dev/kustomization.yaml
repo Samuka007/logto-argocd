@@ -8,6 +8,10 @@ resources:
 
 patches:
 - path: patches/config.yaml
+- path: patches/ingress.yaml
+  target:
+    kind: Ingress
+    name: demo
 
 replacements:
 # Sync hostnames to Ingress
