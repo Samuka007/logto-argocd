@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logto
+  labels:
+    app: logto
+    app.kubernetes.io/name: logto
+    app.kubernetes.io/component: authentication
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: logto
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: logto
+    spec:
+      containers:
+      - name: logto
+        image: ghcr.io/logto-io/logto:latest
+        imagePullPolicy: Always
+        ports:
+        - name: core
+          containerPort: 3001
+          protocol: TCP
+        - name: admin
+          containerPort: 3002
+          protocol: TCP
+        env:
+        # Database connection - 直接使用 CNPG 生成的 URI
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: logto-postgres-app
+              key: uri
+
+        # Configuration from ConfigMap
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: NODE_ENV
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: PORT
+        - name: ADMIN_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: ADMIN_PORT
+        - name: TRUST_PROXY_HEADER
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: TRUST_PROXY_HEADER
+        - name: PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: PROTOCOL
+        - name: CORE_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: CORE_HOSTNAME
+        - name: ENDPOINT
+          value: "${PROTOCOL}://${CORE_HOSTNAME}"
+        - name: ADMIN_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: ADMIN_HOSTNAME
+        - name: ADMIN_ENDPOINT
+          value: "${PROTOCOL}://${ADMIN_HOSTNAME}"
+        - name: CASE_SENSITIVE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: CASE_SENSITIVE_USERNAME
+
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 2000m
+            memory: 1024Mi
+
+        livenessProbe:
+          httpGet:
+            path: /api/status
+            port: core
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: core
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2

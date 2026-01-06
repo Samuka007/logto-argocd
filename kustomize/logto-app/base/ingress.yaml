@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logto
+  labels:
+    app: logto
+spec:
+  rules:
+  - host: logto-core.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: logto
+            port:
+              name: core
+  - host: logto-admin.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: logto
+            port:
+              name: admin
+  tls:
+  - hosts:
+    - logto-core.example.com
+    - logto-admin.example.com
+    secretName: logto-tls

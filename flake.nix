@@ -17,7 +17,12 @@
             kubectl
             kustomize
             argocd
+            kubeseal
+            k9s
+            jq
           ];
+
+          KUBECONFIG = "config";
         };
       }
     );

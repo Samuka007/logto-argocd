@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logto-config
+  labels:
+    app: logto
+data:
+  # 应用配置
+  NODE_ENV: "production"
+  PORT: "3001"
+  ADMIN_PORT: "3002"
+  TRUST_PROXY_HEADER: "true"
+  PROTOCOL: "https"
+  CORE_HOSTNAME: "logto-core.example.com"
+  ADMIN_HOSTNAME: "logto-admin.example.com"
+  CASE_SENSITIVE_USERNAME: "true"

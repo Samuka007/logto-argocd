@@ -1,0 +1,36 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: logto-postgres
+spec:
+  # 生产环境：3 实例高可用配置
+  instances: 3
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+
+  storage:
+    size: 20Gi
+
+  walStorage:
+    size: 5Gi
+
+  # 备份配置（仅 prod 启用）
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://postgres-backups/logto-postgres
+      s3Credentials:
+        accessKeyId:
+          name: logto-backup-storage-credentials
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: logto-backup-storage-credentials
+          key: ACCESS_SECRET_KEY
+      wal:
+        compression: gzip
+    retentionPolicy: "30d"

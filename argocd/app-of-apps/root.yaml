@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend-platform
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+
+  # Source: 指向包含子应用定义的目录
+  source:
+    repoURL: https://github.com/your-org/your-repo.git
+    targetRevision: main
+    path: argocd/applications/dev
+
+  # Destination
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd  # 子应用部署在 argocd namespace
+
+  # Sync policy
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

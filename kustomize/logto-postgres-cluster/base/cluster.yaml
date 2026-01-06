@@ -1,0 +1,58 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: logto-postgres
+spec:
+  instances: 3
+  minSyncReplicas: 1
+  maxSyncReplicas: 1
+
+  # 资源配置 - 为 logto 独享优化
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+
+  # 存储配置
+  storage:
+    size: 20Gi
+    storageClass: local-path
+
+  walStorage:
+    size: 5Gi
+    storageClass: local-path
+
+  # PostgreSQL 配置
+  postgresql:
+    parameters:
+      max_connections: "100" # 调整为 logto 所需
+      shared_buffers: "256MB"
+      work_mem: "4MB"
+
+  # Bootstrap - 初始化 logto 数据库
+  # CNPG 自动创建 logto 用户和数据库，并生成 Secret: logto-postgres-app
+  bootstrap:
+    initdb:
+      database: logto
+      owner: logto
+
+  # 托管角色 - 为 logto 用户授予额外权限
+  # CNPG 会自动同步这些权限到数据库
+  managed:
+    roles:
+      - name: logto
+        ensure: present
+        login: true
+        createrole: true  # Logto 需要此权限来创建额外的角色
+        createdb: false
+        inherit: true
+
+  # 反亲和性 - CNPG 配置方式
+  # https://cloudnative-pg.io/documentation/1.24/scheduling/
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required

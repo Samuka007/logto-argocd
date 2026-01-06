@@ -1,0 +1,24 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: logto-postgres
+spec:
+  instances: 1  # Dev 环境单实例
+
+  # 单实例不需要同步副本
+  minSyncReplicas: 0
+  maxSyncReplicas: 0
+
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  storage:
+    size: 10Gi
+
+  walStorage:
+    size: 2Gi

@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: logto-db-migration
+  labels:
+    app: logto
+    app.kubernetes.io/name: logto
+    app.kubernetes.io/component: db-migration
+  annotations:
+    argocd.argoproj.io/hook: PreSync # 在应用同步前执行
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation # 每次同步前删除旧 Job
+spec:
+  ttlSecondsAfterFinished: 100 # 完成后自动清理
+  backoffLimit: 3 # 失败重试 3 次
+  template:
+    metadata:
+      labels:
+        app: logto
+        app.kubernetes.io/component: db-migration
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: db-migration
+        image: ghcr.io/logto-io/logto:latest
+        command:
+        - sh
+        - -c
+        - |
+          npm run cli db seed -- --swe && npm run cli db alteration deploy latest
+        env:
+        # Database connection - 直接使用 CNPG 生成的 URI
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: logto-postgres-app
+              key: uri
+        - name: CI
+          value: "true" # Non-interactive mode
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
