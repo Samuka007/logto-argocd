@@ -59,7 +59,7 @@ spec:
               name: logto-postgres-app
               key: user
         - name: DB_URL
-          value: "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+          value: "postgresql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
 
         # Configuration from ConfigMap
         - name: NODE_ENV
