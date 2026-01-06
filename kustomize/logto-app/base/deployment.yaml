@@ -69,16 +69,25 @@ spec:
               name: logto-config
               key: CASE_SENSITIVE_USERNAME
 
+        - name: PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: PROTOCOL
+        - name: CORE_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: CORE_HOSTNAME
+        - name: ADMIN_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: ADMIN_HOSTNAME
         - name: ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: ENDPOINT
+          value: "$(PROTOCOL)://$(CORE_HOSTNAME)"
         - name: ADMIN_ENDPOINT
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: ADMIN_ENDPOINT
+          value: "$(PROTOCOL)://$(ADMIN_HOSTNAME)"
 
         resources:
           requests:
