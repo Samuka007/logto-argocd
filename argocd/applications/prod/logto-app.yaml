@@ -4,9 +4,9 @@ metadata:
   name: logto-app-prod
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"  # 数据库就绪后部署应用
+    argocd.argoproj.io/sync-wave: "1" # 数据库就绪后部署应用
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
 

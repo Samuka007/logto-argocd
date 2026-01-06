@@ -5,3 +5,5 @@ metadata:
 data:
   CORE_HOSTNAME: "logto-core-kubernetes-au-dev.samuka007.com"
   ADMIN_HOSTNAME: "logto-admin-kubernetes-au-dev.samuka007.com"
+  ENDPOINT: "https://logto-kubernetes-au-dev.samuka007.com"
+  ADMIN_ENDPOINT: "https://logto-admin-kubernetes-au-dev.samuka007.com"

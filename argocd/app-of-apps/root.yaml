@@ -4,7 +4,7 @@ metadata:
   name: backend-platform
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
 
@@ -17,7 +17,7 @@ spec:
   # Destination
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd  # 子应用部署在 argocd namespace
+    namespace: argocd # 子应用部署在 argocd namespace
 
   # Sync policy
   syncPolicy:
@@ -25,4 +25,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true

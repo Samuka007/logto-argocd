@@ -32,18 +32,11 @@ spec:
             configMapKeyRef:
               name: demo-config
               key: APP_ID
-        - name: PROTOCOL
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: PROTOCOL
-        - name: CORE_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: CORE_HOSTNAME
         - name: ENDPOINT
-          value: "${PROTOCOL}://${CORE_HOSTNAME}"
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: ENDPOINT
 
         resources:
           requests:

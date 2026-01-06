@@ -29,11 +29,30 @@ spec:
           npm run cli db seed -- --swe && npm run cli db alteration deploy latest
         env:
         # Database connection - 直接使用 CNPG 生成的 URI
-        - name: DB_URL
+        - name: DB_HOST
+          value: logto-postgres-pooler
+        - name: DB_PORT
           valueFrom:
             secretKeyRef:
               name: logto-postgres-app
-              key: uri
+              key: port
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: logto-postgres-app
+              key: dbname
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: logto-postgres-app
+              key: password
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: logto-postgres-app
+              key: user
+        - name: DB_URL
+          value: "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
         - name: CI
           value: "true" # Non-interactive mode
         resources:

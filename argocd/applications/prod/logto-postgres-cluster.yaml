@@ -4,9 +4,9 @@ metadata:
   name: logto-postgres-cluster-prod
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "0"  # 先部署数据库
+    argocd.argoproj.io/sync-wave: "0" # 先部署数据库
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
 
@@ -24,4 +24,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true

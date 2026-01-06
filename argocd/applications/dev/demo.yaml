@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "10" # demo 应用最后部署
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
 

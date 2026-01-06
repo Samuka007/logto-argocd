@@ -82,30 +82,22 @@ spec:
             configMapKeyRef:
               name: logto-config
               key: TRUST_PROXY_HEADER
-        - name: PROTOCOL
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: PROTOCOL
-        - name: CORE_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: CORE_HOSTNAME
-        - name: ENDPOINT
-          value: "${PROTOCOL}://${CORE_HOSTNAME}"
-        - name: ADMIN_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              name: logto-config
-              key: ADMIN_HOSTNAME
-        - name: ADMIN_ENDPOINT
-          value: "${PROTOCOL}://${ADMIN_HOSTNAME}"
         - name: CASE_SENSITIVE_USERNAME
           valueFrom:
             configMapKeyRef:
               name: logto-config
               key: CASE_SENSITIVE_USERNAME
+
+        - name: ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: ENDPOINT
+        - name: ADMIN_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: ADMIN_ENDPOINT
 
         resources:
           requests:
