@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+data:
+  APP_ID: "react-sample-app"
+  HOSTNAME: "demo-kubernetes-au-dev.samuka007.com"

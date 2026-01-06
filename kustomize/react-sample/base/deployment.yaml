@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  labels:
+    app: demo
+    app.kubernetes.io/name: demo
+    app.kubernetes.io/component: authentication
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: demo
+        image: ghcr.io/samuka007/react-sample:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        env:
+        - name: APP_ID
+          valueFrom:
+            configMapKeyRef:
+              name: demo-config
+              key: APP_ID
+        - name: PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: PROTOCOL
+        - name: CORE_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: logto-config
+              key: CORE_HOSTNAME
+        - name: ENDPOINT
+          value: "${PROTOCOL}://${CORE_HOSTNAME}"
+
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi

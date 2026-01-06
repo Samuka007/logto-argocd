@@ -6,6 +6,8 @@ metadata:
     app: logto
     app.kubernetes.io/name: logto
     app.kubernetes.io/component: authentication
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 2
   selector:

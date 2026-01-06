@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo
+  labels:
+    app: demo
+spec:
+  rules:
+  - host: demo.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: demo-service
+            port:
+              name: http
+
+  tls:
+  - hosts:
+    - demo.example.com
+    secretName: demo-tls
