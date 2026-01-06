@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: demo
-        image: ghcr.io/samuka007/react-sample:latest
+        image: ghcr.io/samuka007/react-sample:main-5b7c494
         imagePullPolicy: Always
         ports:
         - name: http

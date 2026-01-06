@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: logto
-        image: ghcr.io/logto-io/logto:latest
+        image: ghcr.io/logto-io/logto:1.35.0
         imagePullPolicy: Always
         ports:
         - name: core
