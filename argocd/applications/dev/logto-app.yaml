@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: logto-app
+  name: logto-app-1
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "0" # 数据库和应用一起部署
