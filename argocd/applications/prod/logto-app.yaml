@@ -4,7 +4,7 @@ metadata:
   name: logto-app-prod
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # 数据库就绪后部署应用
+    argocd.argoproj.io/sync-wave: "0"
   finalizers:
   - resources-finalizer.argocd.argoproj.io/background
 spec:
@@ -12,7 +12,7 @@ spec:
 
   source:
     repoURL: https://github.com/your-org/your-repo.git
-    targetRevision: main
+    targetRevision: feat-builtin-db-logto
     path: kustomize/logto-app/overlays/prod
 
   destination:
@@ -23,3 +23,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

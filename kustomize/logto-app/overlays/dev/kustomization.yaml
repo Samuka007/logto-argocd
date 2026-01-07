@@ -7,11 +7,15 @@ resources:
 - ../../base
 
 patches:
-- path: patches/endpoints.yaml
-- path: patches/ingress.yaml
+# Application patches
+- path: patches/app/endpoints.yaml
+- path: patches/app/ingress.yaml
   target:
     kind: Ingress
     name: logto
+
+# Database cluster patches
+- path: patches/database/cluster-resources.yaml
 
 replacements:
 # Sync hostnames to Ingress

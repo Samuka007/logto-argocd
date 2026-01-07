@@ -7,8 +7,7 @@ metadata:
     app.kubernetes.io/name: logto
     app.kubernetes.io/component: db-migration
   annotations:
-    argocd.argoproj.io/hook: PreSync # 在应用同步前执行
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation # 每次同步前删除旧 Job
+    argocd.argoproj.io/sync-wave: "1" # 第二阶段：数据库就绪后执行迁移
 spec:
   ttlSecondsAfterFinished: 100 # 完成后自动清理
   backoffLimit: 3 # 失败重试 3 次

@@ -3,7 +3,7 @@ kind: Cluster
 metadata:
   name: logto-postgres
 spec:
-  instances: 1  # Dev 环境单实例
+  instances: 1 # Dev 环境单实例
 
   # 单实例不需要同步副本
   minSyncReplicas: 0

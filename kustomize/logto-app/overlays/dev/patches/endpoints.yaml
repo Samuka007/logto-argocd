@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: logto-config
-data:
-  CORE_HOSTNAME: "logto-core-kubernetes-au-dev.samuka007.com"
-  ADMIN_HOSTNAME: "logto-admin-kubernetes-au-dev.samuka007.com"

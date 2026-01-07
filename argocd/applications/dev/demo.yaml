@@ -12,14 +12,14 @@ spec:
 
   source:
     repoURL: https://github.com/Samuka007/logto-argocd.git
-    targetRevision: main
+    targetRevision: feat-builtin-db-logto
     path: kustomize/react-sample/overlays/dev
     kustomize:
-      namespace: argocd-dev
+      namespace: argocd-dev-1
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd-dev
+    namespace: argocd-dev-1
 
   syncPolicy:
     automated:

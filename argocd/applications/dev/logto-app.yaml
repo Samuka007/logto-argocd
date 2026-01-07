@@ -4,7 +4,7 @@ metadata:
   name: logto-app
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # 数据库就绪后部署应用
+    argocd.argoproj.io/sync-wave: "0" # 数据库和应用一起部署
   finalizers:
   - resources-finalizer.argocd.argoproj.io/background
 spec:
@@ -12,14 +12,14 @@ spec:
 
   source:
     repoURL: https://github.com/Samuka007/logto-argocd.git
-    targetRevision: main
+    targetRevision: feat-builtin-db-logto
     path: kustomize/logto-app/overlays/dev
     kustomize:
-      namespace: argocd-dev
+      namespace: argocd-dev-1
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd-dev
+    namespace: argocd-dev-1
 
   syncPolicy:
     automated:

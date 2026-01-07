@@ -3,7 +3,7 @@ kind: ScheduledBackup
 metadata:
   name: logto-postgres-backup
 spec:
-  schedule: "0 2 * * *"  # 每日 2 AM UTC
+  schedule: "0 2 * * *" # 每日 2 AM UTC
   backupOwnerReference: self
   cluster:
     name: logto-postgres

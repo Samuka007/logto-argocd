@@ -1,17 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: test-develop
+namespace: production
 
 resources:
 - ../../base
+# Prod 专用的备份资源
+- database/sealed-secret-backup.yaml
+- database/backup-schedule.yaml
 
 patches:
-- path: patches/endpoints.yaml
-- path: patches/ingress.yaml
+# Application patches
+- path: patches/app/endpoints.yaml
+- path: patches/app/ingress.yaml
   target:
     kind: Ingress
     name: logto
+
+# Database cluster patches
+- path: patches/database/cluster-resources.yaml
 
 replacements:
 # Sync hostnames to Ingress
@@ -26,14 +33,7 @@ replacements:
     fieldPaths:
     - spec.rules.0.host
     - spec.tls.0.hosts.0
-  - select:
-      kind: ConfigMap
-      name: logto-config
-    fieldPaths:
-    - data.ENDPOINT
-    options:
-      delimiter: "://"
-      index: 1
+
 - source:
     kind: ConfigMap
     name: logto-config
@@ -45,11 +45,3 @@ replacements:
     fieldPaths:
     - spec.rules.1.host
     - spec.tls.0.hosts.1
-  - select:
-      kind: ConfigMap
-      name: logto-config
-    fieldPaths:
-    - data.ADMIN_ENDPOINT
-    options:
-      delimiter: "://"
-      index: 1
