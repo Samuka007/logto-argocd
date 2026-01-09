@@ -8,9 +8,9 @@ metadata:
     app.kubernetes.io/component: db-migration
   annotations:
     argocd.argoproj.io/sync-wave: "1" # 第二阶段：数据库就绪后执行迁移
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
-  ttlSecondsAfterFinished: 100 # 完成后自动清理
-  backoffLimit: 3 # 失败重试 3 次
+  backoffLimit: 0
   template:
     metadata:
       labels:
